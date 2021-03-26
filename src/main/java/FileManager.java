@@ -11,33 +11,33 @@ import java.util.Locale;
 
 public class FileManager {
 
+    public List<Double> getValuesFromFile(File file) throws IOException {
+        List<Double> values = new ArrayList<>();
 
-    public static void main(String[] args) throws IOException {
-        if (args.length > 0){
-            File inputFile = new File(args[0]);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
-            List<String> outputLines = new ArrayList<>();
-
-            CurrencyConverter currencyConverter = new CurrencyConverter();
-            FlixerClient flixerClient = new FlixerClient();
-            double conversionRate = flixerClient.getConversionRate();
-
-            DecimalFormat decimalFormat = new DecimalFormat("#.####");
-            decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-
-            String inputLine;
-            while ((inputLine = bufferedReader.readLine()) != null){
-                double inputValue = Double.parseDouble(inputLine);
-                double convertedValue = currencyConverter.convertCurrency(inputValue,conversionRate);
-//                outputLines.add(String.valueOf(convertedValue));
-                outputLines.add(decimalFormat.format(convertedValue));
-            }
-
-            Path outputFile = Paths.get("output.txt");
-            Files.write(outputFile, outputLines, StandardCharsets.UTF_8);
-
+        String inputLine;
+        while ((inputLine = bufferedReader.readLine()) != null){
+            values.add(Double.parseDouble(inputLine));
         }
+        return values;
     }
+
+    public void writeToOutputFile(String destinationFile, List<String> outputLines) throws IOException {
+        Path outputFile = Paths.get(destinationFile);
+        Files.write(outputFile, outputLines, StandardCharsets.UTF_8);
+    }
+
+    // https://stackoverflow.com/a/21974043
+    public String getFileExtension(File file){
+        String filename = file.getName();
+        int lastIndexOfName = filename.lastIndexOf(".");
+        if (lastIndexOfName == -1){
+            return "";
+        }
+        return filename.substring(lastIndexOfName);
+    }
+
+
 
 }
