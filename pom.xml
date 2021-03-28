@@ -57,7 +57,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>CurrencyConverter</mainClass>
+                                    <mainClass>at.mostih.currencyconverter.CurrencyConverter</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
