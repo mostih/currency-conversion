@@ -27,7 +27,11 @@ public class FileManager {
 
         String inputLine;
         while ((inputLine = bufferedReader.readLine()) != null) {
-            values.add(Double.parseDouble(inputLine));
+            try {
+                values.add(Double.parseDouble(inputLine));
+            } catch (NumberFormatException e) {
+                System.err.println("Found empty String in input file. skipped line");
+            }
         }
         bufferedReader.close();
         return values;
